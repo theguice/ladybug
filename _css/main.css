@@ -46,10 +46,10 @@ img {
 }
 
 #wrapper li {
-	width: 230px;
-	height: 230px;
+	width: 500px;
+	height: 500px;
 	display: inline-block;
-	border-radius: 200px;
+	border-radius: 500px;
 	overflow: hidden;
 	margin: 2%;
 }
