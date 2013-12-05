@@ -667,6 +667,16 @@ typedef union accel_t_gyro_union
   } value;
 };
 
+int sensorPin = 0;
+int sensorPinX = 1;
+int val = 0;
+int val2 = 0;
+int fullVal = 0;
+int count = 0;
+int threshold = 1000;
+
+float lastArray[3];
+float currentArray[3];
 
 void setup()
 {      
@@ -717,10 +727,15 @@ void loop()
   int error;
   double dT;
   accel_t_gyro_union accel_t_gyro;
+  
+  val = analogRead(sensorPin);
+  val2 = analogRead(sensorPinX);
+  fullVal = val + val2;
+  Serial.println(val);       // writing the value to the PC via serial connection 
+  Serial.println(val2);
 
-
-  Serial.println(F(""));
-  Serial.println(F("MPU-6050"));
+//  Serial.println(F(""));
+//  Serial.println(F("MPU-6050"));
 
   // Read the raw values.
   // Read 14 bytes at once, 
@@ -766,11 +781,11 @@ void loop()
   //   340 per degrees Celsius, -512 at 35 degrees.
   // At 0 degrees: -512 - (340 * 35) = -12412
 
-  Serial.print(F("temperature: "));
-  dT = ( (double) accel_t_gyro.value.temperature + 12412.0) / 340.0;
-  Serial.print(dT, 3);
-  Serial.print(F(" degrees Celsius"));
-  Serial.println(F(""));
+//  Serial.print(F("temperature: "));
+//  dT = ( (double) accel_t_gyro.value.temperature + 12412.0) / 340.0;
+//  Serial.print(dT, 3);
+//  Serial.print(F(" degrees Celsius"));
+//  Serial.println(F(""));
 
 
   // Print the raw gyro values.
@@ -783,8 +798,38 @@ void loop()
   Serial.print(accel_t_gyro.value.z_gyro, DEC);
   Serial.print(F(", "));
   Serial.println(F(""));
-
-  delay(3000);
+  
+  if (count == 0 ) {
+    lastArray[0] = accel_t_gyro.value.x_gyro;
+    lastArray[1] = accel_t_gyro.value.y_gyro;
+    lastArray[2] = accel_t_gyro.value.z_gyro;
+  }
+  else {
+    currentArray[0] = accel_t_gyro.value.x_gyro;
+    currentArray[1] = accel_t_gyro.value.y_gyro;
+    currentArray[2] = accel_t_gyro.value.z_gyro;
+    int stable = 0;
+    for (int i=0; i<3; i++) {
+      Serial.print("This is our diff ");
+      Serial.println(lastArray[i] - currentArray[i]);
+      if(abs(lastArray[i] - currentArray[i]) < threshold) {
+        stable++;
+      }
+    }
+    if (stable == 3){
+      Serial.println("Accel stable");
+    }
+    lastArray[0] = accel_t_gyro.value.x_gyro;
+    lastArray[1] = accel_t_gyro.value.y_gyro;
+    lastArray[2] = accel_t_gyro.value.z_gyro;
+  }
+  count++;
+  
+  delay(1000);
+  
+  if (fullVal > 200) {
+    Serial.println("Pressed");
+  }
 }
 
 
