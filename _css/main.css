@@ -1,3 +1,6 @@
+@charset "UTF-8";
+@import url(http://fonts.googleapis.com/css?family=Short+Stack);
+
 html, 
 body {
 	width: 100%;
@@ -6,4 +9,51 @@ body {
 	font-size: 20px;
 	color: #333;
 	background: #FFF url('../_img/lined_paper.png') repeat;
+	padding: 0;
+	margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Short Stack", "Helvetica Neue", Arial, sans-serif;
+	color: #C72100;
+}
+
+img {
+	height: 100%;
+}
+
+#wrapper {
+	width: 100%;
+	margin: 0 auto;
+	box-sizing: border-box;
+	padding: 0 2% 2% 2%;
+}
+
+#wrapper h1 {
+	text-align: center;
+}
+
+#wrapper ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	text-align: center;
+}
+
+#wrapper li {
+	width: 230px;
+	height: 230px;
+	display: inline-block;
+	border-radius: 200px;
+	overflow: hidden;
+	margin: 2%;
+}
+
+#wrapper li img {
+	margin-left: -50px;
 }
