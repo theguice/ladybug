@@ -674,6 +674,7 @@ int val2 = 0;
 int fullVal = 0;
 int count = 0;
 int threshold = 1000;
+int steadyFor = 0;
 
 float lastArray[3];
 float currentArray[3];
@@ -731,8 +732,8 @@ void loop()
   val = analogRead(sensorPin);
   val2 = analogRead(sensorPinX);
   fullVal = val + val2;
-  Serial.println(val);       // writing the value to the PC via serial connection 
-  Serial.println(val2);
+  //Serial.println(val);       // writing the value to the PC via serial connection 
+  //Serial.println(val2);
 
 //  Serial.println(F(""));
 //  Serial.println(F("MPU-6050"));
@@ -744,8 +745,8 @@ void loop()
   // there is no filter enabled, and the values
   // are not very stable.
   error = MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) &accel_t_gyro, sizeof(accel_t_gyro));
-  Serial.print(F("Read accel, temp and gyro, error = "));
-  Serial.println(error,DEC);
+  //Serial.print(F("Read accel, temp and gyro, error = "));
+  //Serial.println(error,DEC);
 
 
   // Swap all high and low bytes.
@@ -810,22 +811,34 @@ void loop()
     currentArray[2] = accel_t_gyro.value.z_gyro;
     int stable = 0;
     for (int i=0; i<3; i++) {
-      Serial.print("This is our diff ");
-      Serial.println(lastArray[i] - currentArray[i]);
+      //Serial.print("This is our diff ");
+      //Serial.println(lastArray[i] - currentArray[i]);
       if(abs(lastArray[i] - currentArray[i]) < threshold) {
         stable++;
       }
     }
     if (stable == 3 && fullVal > 200){
-      Serial.println("Accel stable and Pressed!");
+      steadyFor++;
+    } else {
+      steadyFor = 0;
     }
+    // If held steady for 2 seconds, snap photo
+    if (steadyFor == 20) {
+      // snap a photo and reset the counter
+      Serial.println("SNAP"); 
+      Serial.println();
+      steadyFor = 0;
+    } else if (steadyFor > 0) {
+      Serial.println(steadyFor);
+    }
+    
     lastArray[0] = accel_t_gyro.value.x_gyro;
     lastArray[1] = accel_t_gyro.value.y_gyro;
     lastArray[2] = accel_t_gyro.value.z_gyro;
   }
   count++;
   
-  delay(1000);
+  delay(100);
 
 }
 

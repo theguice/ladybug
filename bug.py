@@ -1,3 +1,26 @@
+#!/usr/local/bin/python3
+import serial
+from subprocess import call
+import re
+
+# pprint for debugging
+import pprint
+
+ser = serial.Serial('/dev/tty.usbmodemfa131', 9600)
+prog = re.compile('SNAP\r\n')
+
+while True:
+    x = ser.readline()
+
+    #imagesnap -d "Logitech Camera" _upload/snap.JPG
+    #pprint.pprint(x)
+
+    if (prog.match(x.decode("utf-8"))):
+        y = call(["imagesnap", "-d", "Logitech Camera", "_upload/snap.JPG"])
+        pprint.pprint(y)
+
+
+'''
 import pygame
 import pygame.camera
 from pygame.locals import *
@@ -12,7 +35,7 @@ import pygame.image
 pygame.image.save(img, "photo.bmp")
 pygame.camera.quit()
 
-'''
+
 
 from ctypes_opencv import *
 MAX_CLUSTERS=5
