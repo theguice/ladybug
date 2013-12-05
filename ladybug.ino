@@ -766,13 +766,13 @@ void loop()
 
   // Print the raw acceleration values
 
-  Serial.print(F("accel x,y,z: "));
-  Serial.print(accel_t_gyro.value.x_accel, DEC);
-  Serial.print(F(", "));
-  Serial.print(accel_t_gyro.value.y_accel, DEC);
-  Serial.print(F(", "));
-  Serial.print(accel_t_gyro.value.z_accel, DEC);
-  Serial.println(F(""));
+//  Serial.print(F("accel x,y,z: "));
+//  Serial.print(accel_t_gyro.value.x_accel, DEC);
+//  Serial.print(F(", "));
+//  Serial.print(accel_t_gyro.value.y_accel, DEC);
+//  Serial.print(F(", "));
+//  Serial.print(accel_t_gyro.value.z_accel, DEC);
+//  Serial.println(F(""));
 
 
   // The temperature sensor is -40 to +85 degrees Celsius.
@@ -790,14 +790,14 @@ void loop()
 
   // Print the raw gyro values.
 
-  Serial.print(F("gyro x,y,z : "));
-  Serial.print(accel_t_gyro.value.x_gyro, DEC);
-  Serial.print(F(", "));
-  Serial.print(accel_t_gyro.value.y_gyro, DEC);
-  Serial.print(F(", "));
-  Serial.print(accel_t_gyro.value.z_gyro, DEC);
-  Serial.print(F(", "));
-  Serial.println(F(""));
+//  Serial.print(F("gyro x,y,z : "));
+//  Serial.print(accel_t_gyro.value.x_gyro, DEC);
+//  Serial.print(F(", "));
+//  Serial.print(accel_t_gyro.value.y_gyro, DEC);
+//  Serial.print(F(", "));
+//  Serial.print(accel_t_gyro.value.z_gyro, DEC);
+//  Serial.print(F(", "));
+//  Serial.println(F(""));
   
   if (count == 0 ) {
     lastArray[0] = accel_t_gyro.value.x_gyro;
@@ -816,8 +816,8 @@ void loop()
         stable++;
       }
     }
-    if (stable == 3){
-      Serial.println("Accel stable");
+    if (stable == 3 && fullVal > 200){
+      Serial.println("Accel stable and Pressed!");
     }
     lastArray[0] = accel_t_gyro.value.x_gyro;
     lastArray[1] = accel_t_gyro.value.y_gyro;
@@ -826,10 +826,7 @@ void loop()
   count++;
   
   delay(1000);
-  
-  if (fullVal > 200) {
-    Serial.println("Pressed");
-  }
+
 }
 
 
