@@ -712,10 +712,10 @@ void setup()
   // is in sleep mode at power-up. Even if the
   // bit reads '0'.
   error = MPU6050_read (MPU6050_PWR_MGMT_2, &c, 1);
-  Serial.print(F("PWR_MGMT_2 : "));
-  Serial.print(c,HEX);
-  Serial.print(F(", error = "));
-  Serial.println(error,DEC);
+  //Serial.print(F("PWR_MGMT_2 : "));
+  //Serial.print(c,HEX);
+  //Serial.print(F(", error = "));
+  //Serial.println(error,DEC);
 
 
   // Clear the 'sleep' bit to start the sensor.
@@ -732,6 +732,8 @@ void loop()
   val = analogRead(sensorPin);
   val2 = analogRead(sensorPinX);
   fullVal = val + val2;
+  //Serial.println(fullVal);
+  
   //Serial.println(val);       // writing the value to the PC via serial connection 
   //Serial.println(val2);
 
@@ -817,7 +819,7 @@ void loop()
         stable++;
       }
     }
-    if (stable == 3 && fullVal > 200){
+    if (stable == 3 && fullVal > 30){
       steadyFor++;
     } else {
       steadyFor = 0;
