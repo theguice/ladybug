@@ -32,3 +32,22 @@ python3 bug.py
 http://people.ischool.berkeley.edu/~shaun/ladybug/
 '''
 
+
+''' Ideas from demo day
+
+
+laura: play with mirrors to adjust angle of imagesnap
+Kimiko: more interaction or sensing from the antennas?
+        improve feedback (am i doing it right?)  LED strip.
+
+
+stanford lady: the journal provide prompts.  (what does this remind you of?)
+
+cesar: adding blur to image edges.  (bring eye to middle like in actual magnify glass)
+       adding sephia filter for more "scientificy feel"
+
+kimiko: submit a paper to CHI
+		
+
+'''
+

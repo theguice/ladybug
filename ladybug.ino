@@ -679,10 +679,15 @@ int steadyFor = 0;
 float lastArray[3];
 float currentArray[3];
 
+
+// initialize light
+int light = 13;
+
 void setup()
 {      
   int error;
   uint8_t c;
+  pinMode(light, OUTPUT);
 
 
   Serial.begin(9600);
@@ -724,7 +729,7 @@ void setup()
 
 
 void loop()
-{
+{ 
   int error;
   double dT;
   accel_t_gyro_union accel_t_gyro;
@@ -825,11 +830,15 @@ void loop()
       steadyFor = 0;
     }
     // If held steady for 2 seconds, snap photo
+
     if (steadyFor == 20) {
       // snap a photo and reset the counter
       Serial.println("SNAP"); 
       Serial.println();
       steadyFor = 0;
+      digitalWrite(light, HIGH);
+      delay(500);
+      digitalWrite(light, LOW);
     } else if (steadyFor > 0) {
       Serial.println(steadyFor);
     }
